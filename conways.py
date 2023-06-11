@@ -69,11 +69,7 @@ class ConwaysGameOfLife(tk.Tk):
 
     def render(self):
         for cell in self.gen.iter():
-            # only update changed cells
-            if cell.changed:
-                print("Render: ", cell)
-                self.canvas.itemconfigure(cell.rect, fill="white" if cell.alive else "black")  
-                cell.changed = False   
+            self.canvas.itemconfigure(cell.rect, fill=cell.color()) 
 
     def evolve(self):
         self.last_gen = deepcopy(self.gen)
@@ -82,15 +78,19 @@ class ConwaysGameOfLife(tk.Tk):
         for cell in self.last_gen.iter():
 
             alive_neighbors = self.last_gen.count_alive_neighbors(cell)
+            new_cell = self.gen.at(cell.x, cell.y)
 
             if cell.alive:
                 if alive_neighbors < 2:
-                    self.gen.at(cell.x, cell.y).die() # under population
+                    new_cell.die() # under population
                 elif alive_neighbors > 3:
-                    self.gen.at(cell.x, cell.y).die() # over population
+                    new_cell.die() # over population
             else:
                 if alive_neighbors == 3:
-                    self.gen.at(cell.x, cell.y).awake() # reproduction
+                    new_cell.awake() # reproduction
+                else:
+                    new_cell.update_opacity() # slowly fade away
+
         
         return self.last_gen != self.gen
 
