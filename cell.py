@@ -28,13 +28,11 @@ class Cell:
             self.opacity -= 1
 
     def color(self):
-        if self.alive:
-            return "white"
-        elif self.opacity > 0:
-            cc = "b0a3e6"
-            r = int(int(cc[0:2], 16) * (self.opacity / 100))
-            g = int(int(cc[2:4], 16) * (self.opacity / 100))
-            b = int(int(cc[4:6], 16) * (self.opacity / 100))
+        if self.opacity > 0:
+            cc = "ffffff"
+            r = int(int(cc[0:2], 16) * (self.opacity / 0xff))
+            g = int(int(cc[2:4], 16) * (self.opacity / 0xff))
+            b = int(int(cc[4:6], 16) * (self.opacity / 0xff))
             return "#%02x%02x%02x" % (r,g,b)
         else:
             return "black"
