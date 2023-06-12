@@ -8,16 +8,13 @@ class Cell:
 
     def __repr__(self):
         return "[%d/%d]" % (self.x, self.y)
-    
-    def _set(self, alive):
-        self.alive = alive
 
     def die(self):
-        self._set(False)
+        self.alive = False
         self.opacity = 0x30
 
     def awake(self):
-        self._set(True)
+        self.alive = True
         self.opacity = 0xff
 
     def toggle(self):
