@@ -14,6 +14,7 @@ class ConwaysGameOfLife(tk.Tk):
 
     def __init__(self, opts):
         super().__init__()
+        self.title("Conway's Game of Life")
         self.ctx = GameContext(opts)
         self.gen = Generation(self.ctx)
         self.last_gen = None
