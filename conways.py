@@ -6,6 +6,7 @@ from sys import exit
 
 from ctx import GameContext
 from gen import Generation
+from shape import *
 
 
 
@@ -94,21 +95,23 @@ class ConwaysGameOfLife(tk.Tk):
         
         return self.last_gen != self.gen
 
+    def add_shape(self, x, y, shape):
+        for xp, yp in shape().coords(x, y):
+            self.gen.at(xp, yp).awake()
+
 
 
 if __name__ == "__main__":
 
     game = ConwaysGameOfLife({
-        "size": "100x100",
+        "size": "50x50",
         "zoom": 10,
         "sleep": 1
     })
 
-    # glider
-    game.gen.at(0, 5).awake()
-    game.gen.at(1, 6).awake()
-    game.gen.at(2, 4).awake()
-    game.gen.at(2, 5).awake()
-    game.gen.at(2, 6).awake()
+    game.add_shape(5, 5, Glider)
+    game.add_shape(5, 15, Glider)
+    game.add_shape(5, 25, Glider)
+    game.add_shape(25, 25, Blinker)
 
     game.launch()
